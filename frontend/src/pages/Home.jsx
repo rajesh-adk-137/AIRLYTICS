@@ -212,7 +212,7 @@ const Home = () => {
               <Sparkles className="h-4 w-4 text-blue-600" />
               <span className="text-sm font-medium text-blue-700">AI-Powered Review Analytics</span>
             </div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-3">
+            <h1 className="text-5xl font-bold pb-10 bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-3">
               Airline Reviews Intelligence
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
