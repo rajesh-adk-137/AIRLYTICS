@@ -15,35 +15,35 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="fixed w-full bg-white/70 backdrop-blur-xl z-50 border-b border-gray-200/50 shadow-sm">
+    <nav className="fixed w-full bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 backdrop-blur-xl z-50 border-b border-blue-900/50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo - Left */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 p-2.5 rounded-xl">
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative bg-gradient-to-r from-violet-600 to-purple-600 p-2.5 rounded-xl">
                 <BarChart3 className="h-6 w-6 text-white" />
               </div>
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-bold text-gray-900">
+              <span className="text-2xl font-bold text-white">
                 AirLytics
               </span>
-              <span className="text-xs text-gray-500 -mt-1">AI Analytics Platform</span>
+              <span className="text-xs text-gray-400 -mt-1">AI Analytics Platform</span>
             </div>
           </Link>
 
           {/* Center Navigation - Desktop */}
-          <div className="hidden md:flex items-center space-x-1 bg-gray-100/80 rounded-full px-2 py-2">
+          <div className="hidden md:flex items-center space-x-1 bg-blue-950/60 rounded-full px-2 py-2 border border-blue-900/50">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 className={`relative px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ${
                   isActive(link.path)
-                    ? 'bg-white text-blue-600 shadow-md'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
+                    ? 'bg-white text-violet-600 shadow-md'
+                    : 'text-blue-200 hover:text-white hover:bg-blue-900/50'
                 }`}
               >
                 {link.name}
@@ -67,7 +67,7 @@ const Navbar = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-300"
+                className="p-2.5 text-gray-500 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-all duration-300"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
@@ -75,7 +75,7 @@ const Navbar = () => {
             </div>
             <Link
               to="/home"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2.5 rounded-full font-semibold text-sm shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-5 py-2.5 rounded-full font-semibold text-sm shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300"
             >
               <Sparkles className="h-4 w-4" />
               <span>Try Now</span>
@@ -104,7 +104,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
                 className={`block px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   isActive(link.path)
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-md'
                     : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -115,7 +115,7 @@ const Navbar = () => {
             <div className="pt-4 border-t border-gray-200">
               <Link
                 to="/home"
-                className="flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-3 rounded-xl font-semibold text-sm shadow-md w-full"
+                className="flex items-center justify-center space-x-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-5 py-3 rounded-xl font-semibold text-sm shadow-md w-full"
               >
                 <Sparkles className="h-4 w-4" />
                 <span>Try Now</span>
@@ -137,7 +137,7 @@ const Navbar = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                className="p-2.5 text-gray-500 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-all"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
