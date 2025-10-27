@@ -1,15 +1,16 @@
-// src/pages/Home.jsx (refactored)
+// src/pages/Home.jsx
 
 import { useState, useEffect } from 'react';
-import { 
-  Search, Send, Sparkles, Settings, Zap, TrendingUp, BarChart3, Brain, 
-  Lightbulb, Filter, Loader2, AlertCircle, CheckCircle2, Users, Plane, Star, MessageSquare
+import {
+  Search, Send, Sparkles, Settings, Zap, TrendingUp, BarChart3, Brain,
+  Lightbulb, Filter, Loader2, AlertCircle, CheckCircle2, Users, Plane, Star, MessageSquare, HelpCircle
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BaseCase from '../components/BaseCase';
 import SpecialCase from '../components/SpecialCase';
 import Interpreter from '../components/Interpreter';
+import AgentHelp from '../components/AgentHelp';
 
 const TOP_AIRLINES = [
   "Frontier Airlines", "Turkish Airlines", "Thomson Airways", "China Eastern Airlines", "China Southern Airlines",
@@ -31,6 +32,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
   const [apiMode, setApiMode] = useState('semantic');
+  const [showHelp, setShowHelp] = useState(false);
 
   const [filters, setFilters] = useState({
     airline_name: '',
@@ -49,12 +51,10 @@ const Home = () => {
     limit: 100
   });
 
-  // Scroll to top on component mount
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  // Reset results when mode changes
   useEffect(() => {
     setResults(null);
     setError(null);
@@ -85,7 +85,6 @@ const Home = () => {
 
         const smartData = await smartResponse.json();
 
-        // Optionally also fetch base case to show side by side in UI when special_case
         if (smartData.mode === 'special_case') {
           const baseRequestBody = { query: query.trim(), limit: filters.limit };
           const baseResponse = await fetch('http://127.0.0.1:8000/base_case', {
@@ -112,14 +111,12 @@ const Home = () => {
           limit: filters.limit
         };
 
-        // Categorical filters
         if (filters.airline_name) requestBody.airline_name = filters.airline_name;
         if (filters.type_of_traveller) requestBody.type_of_traveller = filters.type_of_traveller;
         if (filters.seat_type) requestBody.seat_type = filters.seat_type;
         if (filters.recommended) requestBody.recommended = filters.recommended;
         if (filters.verified !== null) requestBody.verified = filters.verified;
 
-        // Numeric filters
         [
           "overall_rating",
           "seat_comfort",
@@ -164,11 +161,11 @@ const Home = () => {
       "food_beverages", "ground_service", "inflight_entertainment",
       "wifi_connectivity", "value_for_money"
     ];
-    
+
     if (numericFieldKeys.includes(field) && value === '') {
       value = null;
     }
-    
+
     setFilters(prev => ({ ...prev, [field]: value }));
   };
 
@@ -210,84 +207,31 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <style>{`
         @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes sparkle {
-          0%, 100% {
-            transform: rotate(0deg) scale(1);
-            opacity: 1;
-          }
-          50% {
-            transform: rotate(180deg) scale(1.1);
-            opacity: 0.8;
-          }
+          0%, 100% { transform: rotate(0deg) scale(1); opacity: 1; }
+          50% { transform: rotate(180deg) scale(1.1); opacity: 0.8; }
         }
-
         @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-3px);
-          }
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-3px); }
         }
-
         @keyframes pulse-glow {
-          0%, 100% {
-            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
-          }
-          50% {
-            box-shadow: 0 0 40px rgba(79, 70, 229, 0.5);
-          }
+          0%, 100% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(79, 70, 229, 0.5); }
         }
-
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .animate-sparkle {
-          animation: sparkle 3s ease-in-out infinite;
-        }
-
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-
-        .animate-pulse-glow {
-          animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        .delay-100 {
-          animation-delay: 0.1s;
-        }
-
-        .delay-200 {
-          animation-delay: 0.2s;
-        }
-
-        .delay-300 {
-          animation-delay: 0.3s;
-        }
-
-        .delay-400 {
-          animation-delay: 0.4s;
-        }
-
-        .delay-500 {
-          animation-delay: 0.5s;
-        }
-
-        .delay-600 {
-          animation-delay: 0.6s;
-        }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .animate-sparkle { animation: sparkle 3s ease-in-out infinite; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
       `}</style>
 
       <Navbar />
@@ -307,8 +251,8 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Mode Toggle */}
-          <div className="max-w-4xl mx-auto mb-6 flex justify-center animate-fade-in-up delay-300 opacity-0">
+          {/* Mode Toggle + Help (Help now visible in both modes) */}
+          <div className="max-w-4xl mx-auto mb-6 flex items-center justify-center gap-3 animate-fade-in-up delay-300 opacity-0">
             <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-1.5 border border-gray-200 inline-flex">
               <button
                 onClick={() => setApiMode('semantic')}
@@ -334,6 +278,16 @@ const Home = () => {
                 <span>Agent Analytics</span>
               </button>
             </div>
+
+            {/* Help button always visible */}
+            <button
+              onClick={() => setShowHelp(true)}
+              className="inline-flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold bg-white/80 border border-gray-200 hover:border-indigo-400 hover:shadow-md transition-all"
+              title="See available fields and example analytical questions"
+            >
+              <HelpCircle className="h-4 w-4 text-indigo-600" />
+              <span>Help</span>
+            </button>
           </div>
 
           {/* Search Input */}
@@ -371,8 +325,8 @@ const Home = () => {
                   type="button"
                   onClick={() => setShowFilters(!showFilters)}
                   className={`p-2.5 rounded-lg transition-all mr-3 ${
-                    showFilters 
-                      ? 'bg-blue-100 text-blue-600 shadow-sm' 
+                    showFilters
+                      ? 'bg-blue-100 text-blue-600 shadow-sm'
                       : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'
                   }`}
                 >
@@ -411,8 +365,8 @@ const Home = () => {
                     <Settings className="h-5 w-5 text-gray-700" />
                     <h3 className="font-bold text-gray-900 text-lg">Advanced Filters</h3>
                   </div>
-                  <button 
-                    onClick={clearFilters} 
+                  <button
+                    onClick={clearFilters}
                     className="text-sm text-blue-600 hover:text-blue-700 font-semibold px-4 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
                   >
                     Clear All
@@ -553,7 +507,7 @@ const Home = () => {
                     Example Queries for {apiMode === 'agent' ? 'Agent Analytics' : 'Semantic Search'}
                   </h3>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-4 mb-8">
                   {exampleQueries[apiMode].map((example, idx) => (
                     <button
@@ -644,7 +598,6 @@ const Home = () => {
           {/* Results Section */}
           {results && !isLoading && (
             <div className="space-y-6">
-              {/* Fallback Notice (only when Smart Case falls to Base Case) */}
               {apiMode === 'agent' && results.mode === 'base_case' && results.note && (
                 <div className="max-w-4xl mx-auto">
                   <div className="bg-amber-50/90 backdrop-blur-md border-2 border-amber-300 rounded-2xl p-6 shadow-xl">
@@ -658,8 +611,7 @@ const Home = () => {
                         {results.interpreted_query && (
                           <div className="bg-white/60 rounded-lg p-3 border border-amber-200 mt-2">
                             <p className="text-sm text-amber-700">
-                              <span className="font-semibold">Interpreted Query:</span> "
-                              {results.interpreted_query}"
+                              <span className="font-semibold">Interpreted Query:</span> "{results.interpreted_query}"
                             </p>
                           </div>
                         )}
@@ -669,14 +621,12 @@ const Home = () => {
                 </div>
               )}
 
-              {/* Results Display */}
               {results.mode === 'special_case' ? (
                 <div className="space-y-8">
                   <SpecialCase data={results} query={query} />
-                  
-                  {/* AI Insights - After SpecialCase, Before BaseCase */}
+
                   <Interpreter results={results} query={query} />
-                  
+
                   {results.baseCase && (
                     <div className="mt-8">
                       <BaseCase data={results.baseCase} query={results.semantic_query_used || query} />
@@ -685,7 +635,6 @@ const Home = () => {
                 </div>
               ) : (
                 <>
-                  {/* AI Insights - Before BaseCase */}
                   <Interpreter results={results} query={query} />
                   <BaseCase data={results} query={results.interpreted_query || query} />
                 </>
@@ -696,6 +645,9 @@ const Home = () => {
       </div>
 
       <Footer />
+
+      {/* Help Modal always available */}
+      <AgentHelp open={showHelp} onClose={() => setShowHelp(false)} />
     </div>
   );
 };

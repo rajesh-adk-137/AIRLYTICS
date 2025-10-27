@@ -85,7 +85,7 @@ const About = () => {
     {
       step: "04",
       title: "Statistical Processing",
-      description: "Backend computes correlations, distributions, percentages, and cross-metric analytics using NumPy/Pandas",
+      description: "Backend computes correlations, distributions, percentages, and cross-metric analytics using NumPy/Pandas based on retrieved top reviews.",
       icon: <TrendingUp className="h-6 w-6" />,
       tech: "FastAPI + SciPy"
     },
@@ -287,7 +287,7 @@ const About = () => {
             <span>Technical Deep Dive</span>
           </div>
           
-          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight animate-fade-in-up delay-100 opacity-0">
+          <h1 className="text-5xl sm:text-5xl font-bold text-gray-900 leading-tight animate-fade-in-up delay-100 opacity-0">
             Turning Passengers' Voices
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
@@ -382,7 +382,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Analytical Functions */}
+      Analytical Functions
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-indigo-50 to-purple-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
