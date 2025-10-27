@@ -55,7 +55,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <a
-                href="https://github.com"
+                href="https://github.com/rajesh-adk-137"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all duration-300"
@@ -64,7 +64,7 @@ const Navbar = () => {
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/rajesh-adhikari-93425a310/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 text-gray-500 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-all duration-300"

@@ -11,10 +11,16 @@ import {
   Briefcase,
   Lightbulb
 } from 'lucide-react';
+import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Landing = () => {
+  useEffect(() => {
+    // Scroll to top on component mount
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const features = [
     {
       icon: <MessageSquare className="h-6 w-6" />,
@@ -78,18 +84,100 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes sparkle {
+          0%, 100% {
+            transform: rotate(0deg) scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: rotate(180deg) scale(1.1);
+            opacity: 0.8;
+          }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(79, 70, 229, 0.5);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-sparkle {
+          animation: sparkle 3s ease-in-out infinite;
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .delay-100 {
+          animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+          animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+          animation-delay: 0.3s;
+        }
+
+        .delay-400 {
+          animation-delay: 0.4s;
+        }
+
+        .delay-500 {
+          animation-delay: 0.5s;
+        }
+
+        .delay-600 {
+          animation-delay: 0.6s;
+        }
+      `}</style>
+
       <Navbar />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center space-y-8">
-            <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-2 text-blue-700 text-sm font-medium">
-              <Sparkles className="h-4 w-4" />
+            <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-2 text-blue-700 text-sm font-medium animate-fade-in-up opacity-0">
+              <Sparkles className="h-4 w-4 animate-sparkle" />
               <span>MindsDB Hacktoberfest 2025 Project</span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight animate-fade-in-up delay-100 opacity-0">
               From Messy Reviews to
               <br />
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
@@ -97,15 +185,15 @@ const Landing = () => {
               </span>
             </h1>
 
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-200 opacity-0">
               Turn 20,000+ airline reviews into actionable insights with hybrid semantic search, 
               agent-driven analytics, and management-focused decision intelligence.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-in-up delay-300 opacity-0">
               <a
                 href="/home"
-                className="group inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                className="group inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse-glow"
               >
                 <span>Ask. Analyze. Act.</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -119,16 +207,16 @@ const Landing = () => {
               </a>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-8 pt-8 text-sm text-gray-500">
-              <div className="flex items-center space-x-2">
+            <div className="flex flex-wrap items-center justify-center gap-8 pt-8 text-sm text-gray-500 animate-fade-in-up delay-400 opacity-0">
+              <div className="flex items-center space-x-2 animate-float">
                 <CheckCircle2 className="h-5 w-5 text-green-500" />
                 <span>MindsDB Knowledge Bases</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 animate-float delay-100">
                 <CheckCircle2 className="h-5 w-5 text-green-500" />
                 <span>Dual-Agent Architecture</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 animate-float delay-200">
                 <CheckCircle2 className="h-5 w-5 text-green-500" />
                 <span>Zero-ETL Analytics</span>
               </div>
@@ -140,7 +228,7 @@ const Landing = () => {
       {/* Features Grid */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-fade-in-up delay-500 opacity-0">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Enterprise-Grade Analytics, Zero Complexity
             </h2>
@@ -153,7 +241,8 @@ const Landing = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group p-6 bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl hover:shadow-xl hover:border-blue-300 transition-all duration-300"
+                className="group p-6 bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl hover:shadow-xl hover:border-blue-300 transition-all duration-300 animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${0.6 + index * 0.1}s` }}
               >
                 <div className="bg-gradient-to-br from-blue-500 to-indigo-500 w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform">
                   {feature.icon}
@@ -175,7 +264,7 @@ const Landing = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center space-x-2 bg-indigo-100 border border-indigo-300 rounded-full px-4 py-2 text-indigo-700 text-sm font-semibold mb-4">
-              <Brain className="h-4 w-4" />
+              <Brain className="h-4 w-4 animate-sparkle" />
               <span>Analytics Agent Capabilities</span>
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -207,7 +296,7 @@ const Landing = () => {
                       "{item.query}"
                     </p>
                     <div className="flex items-start space-x-2 text-sm text-gray-600">
-                      <Lightbulb className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                      <Lightbulb className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0 animate-sparkle" />
                       <span className="italic">{item.insight}</span>
                     </div>
                   </div>
@@ -238,7 +327,7 @@ const Landing = () => {
           <div className="text-center mt-12">
             <a
               href="/home"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse-glow"
             >
               <span>Start Analyzing</span>
               <ArrowRight className="h-5 w-5" />

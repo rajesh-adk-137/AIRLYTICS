@@ -49,6 +49,11 @@ const Home = () => {
     limit: 100
   });
 
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   // Reset results when mode changes
   useEffect(() => {
     setResults(null);
@@ -203,25 +208,107 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes sparkle {
+          0%, 100% {
+            transform: rotate(0deg) scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: rotate(180deg) scale(1.1);
+            opacity: 0.8;
+          }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-3px);
+          }
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(79, 70, 229, 0.5);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-sparkle {
+          animation: sparkle 3s ease-in-out infinite;
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .delay-100 {
+          animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+          animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+          animation-delay: 0.3s;
+        }
+
+        .delay-400 {
+          animation-delay: 0.4s;
+        }
+
+        .delay-500 {
+          animation-delay: 0.5s;
+        }
+
+        .delay-600 {
+          animation-delay: 0.6s;
+        }
+      `}</style>
+
       <Navbar />
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center space-x-2 bg-blue-100/60 backdrop-blur-sm border border-blue-300 rounded-full px-4 py-2 mb-4">
-              <Sparkles className="h-4 w-4 text-blue-600" />
+            <div className="inline-flex items-center space-x-2 bg-blue-100/60 backdrop-blur-sm border border-blue-300 rounded-full px-4 py-2 mb-4 animate-fade-in-up opacity-0">
+              <Sparkles className="h-4 w-4 text-blue-600 animate-sparkle" />
               <span className="text-sm font-medium text-blue-700">AI-Powered Review Analytics</span>
             </div>
-            <h1 className="text-5xl font-bold pb-10 bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-3">
+            <h1 className="text-5xl font-bold pb-10 bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-3 animate-fade-in-up delay-100 opacity-0">
               Airline Reviews Intelligence
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in-up delay-200 opacity-0">
               Search and analyze 20,000+ airline reviews with AI-powered insights
             </p>
           </div>
 
           {/* Mode Toggle */}
-          <div className="max-w-4xl mx-auto mb-6 flex justify-center">
+          <div className="max-w-4xl mx-auto mb-6 flex justify-center animate-fade-in-up delay-300 opacity-0">
             <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-1.5 border border-gray-200 inline-flex">
               <button
                 onClick={() => setApiMode('semantic')}
@@ -250,8 +337,8 @@ const Home = () => {
           </div>
 
           {/* Search Input */}
-          <div className="max-w-4xl mx-auto mb-8">
-            <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-gray-200 hover:border-blue-300 transition-all duration-300">
+          <div className="max-w-4xl mx-auto mb-8 animate-fade-in-up delay-400 opacity-0">
+            <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-gray-200 hover:border-blue-300 transition-all duration-300 animate-pulse-glow">
               <div className="flex items-center p-4">
                 <div className="pl-2 pr-4">
                   {isLoading ? (
@@ -458,10 +545,10 @@ const Home = () => {
 
           {/* Initial State - Example Queries */}
           {!isLoading && !results && !error && (
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-6xl mx-auto animate-fade-in-up delay-500 opacity-0">
               <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border-2 border-gray-200">
                 <div className="flex items-center space-x-2 mb-6">
-                  <Lightbulb className="h-6 w-6 text-amber-500" />
+                  <Lightbulb className="h-6 w-6 text-amber-500 animate-sparkle" />
                   <h3 className="text-xl font-bold text-gray-900">
                     Example Queries for {apiMode === 'agent' ? 'Agent Analytics' : 'Semantic Search'}
                   </h3>
@@ -488,7 +575,7 @@ const Home = () => {
 
                 <div className="pt-6 border-t-2 border-gray-200">
                   <div className="grid md:grid-cols-3 gap-6">
-                    <div className="flex items-start space-x-3">
+                    <div className="flex items-start space-x-3 animate-float">
                       <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
                         <MessageSquare className="h-6 w-6 text-white" />
                       </div>
@@ -497,7 +584,7 @@ const Home = () => {
                         <p className="text-sm text-gray-600">Comprehensive database</p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
+                    <div className="flex items-start space-x-3 animate-float delay-100">
                       <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
                         <TrendingUp className="h-6 w-6 text-white" />
                       </div>
@@ -506,7 +593,7 @@ const Home = () => {
                         <p className="text-sm text-gray-600">Cross-metric patterns</p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
+                    <div className="flex items-start space-x-3 animate-float delay-200">
                       <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg">
                         <Brain className="h-6 w-6 text-white" />
                       </div>

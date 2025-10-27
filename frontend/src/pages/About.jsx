@@ -17,10 +17,16 @@ import {
   Network,
   BarChart3
 } from 'lucide-react';
+import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const About = () => {
+  useEffect(() => {
+    // Scroll to top on component mount
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const techStack = [
     {
       icon: <Brain className="h-8 w-8" />,
@@ -175,18 +181,113 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideInFromBottom {
+          from {
+            opacity: 0;
+            transform: translateY(100px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes sparkle {
+          0%, 100% {
+            transform: rotate(0deg) scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: rotate(5deg) scale(1.01);
+            opacity: 0.8;
+          }
+        }
+
+        @keyframes rotate {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-3px);
+          }
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(79, 70, 229, 0.5);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-slide-in {
+          animation: slideInFromBottom 1s ease-out forwards;
+        }
+
+        .animate-sparkle {
+          animation: sparkle 3s ease-in-out infinite;
+        }
+
+        .animate-rotate {
+          animation: rotate 8s linear infinite;
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-700 { animation-delay: 0.7s; }
+        .delay-800 { animation-delay: 0.8s; }
+      `}</style>
+
       <Navbar />
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-200 rounded-full px-4 py-2 text-indigo-700 text-sm font-medium">
-            <Target className="h-4 w-4" />
+          <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-200 rounded-full px-4 py-2 text-indigo-700 text-sm font-medium animate-fade-in-up opacity-0">
+            <Target className="h-4 w-4 animate-sparkle" />
             <span>Technical Deep Dive</span>
           </div>
           
-          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight">
+          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight animate-fade-in-up delay-100 opacity-0">
             Turning Passengers' Voices
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
@@ -194,7 +295,7 @@ const About = () => {
             </span>
           </h1>
           
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-200 opacity-0">
             AirLytics demonstrates how Knowledge Bases transform messy, text-heavy customer feedback 
             into business-ready intelligence using RAG-style analytics and explainable AI.
           </p>
@@ -204,10 +305,10 @@ const About = () => {
       {/* Purpose Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12 border border-blue-100">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12 border border-blue-100 animate-slide-in delay-300 opacity-0">
             <div className="flex items-start space-x-4 mb-6">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl">
-                <Target className="h-6 w-6 text-white" />
+              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl animate-pulse-glow">
+                <Target className="h-6 w-6 text-white animate-float" />
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mt-1">Built for Airline Management</h2>
             </div>
@@ -237,7 +338,7 @@ const About = () => {
       {/* Architecture Flow */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-fade-in-up delay-400 opacity-0">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">System Architecture</h2>
             <p className="text-lg text-gray-600">
               End-to-end flow from natural language query to actionable insight
@@ -248,15 +349,18 @@ const About = () => {
             {architectureFlow.map((item, index) => (
               <div
                 key={index}
-                className="relative bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-xl hover:border-blue-300 transition-all duration-300"
+                className="relative bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-xl hover:border-blue-300 transition-all duration-300 animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${0.5 + index * 0.1}s` }}
               >
                 <div className="flex items-start space-x-4">
                   <div className="relative">
                     <div className="text-5xl font-bold text-blue-100 absolute -top-4 -left-1">
                       {item.step}
                     </div>
-                    <div className="relative bg-gradient-to-br from-blue-500 to-indigo-500 w-12 h-12 rounded-xl flex items-center justify-center text-white z-10">
-                      {item.icon}
+                    <div className="relative bg-gradient-to-br from-blue-500 to-indigo-500 w-12 h-12 rounded-xl flex items-center justify-center text-white z-10 animate-pulse-glow">
+                      <div className="animate-float">
+                        {item.icon}
+                      </div>
                     </div>
                   </div>
                   
@@ -283,7 +387,7 @@ const About = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center space-x-2 bg-indigo-100 border border-indigo-300 rounded-full px-4 py-2 text-indigo-700 text-sm font-semibold mb-4">
-              <Cpu className="h-4 w-4" />
+              <Cpu className="h-4 w-4 animate-rotate" />
               <span>Core Analytics Engine</span>
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Five Functions, Infinite Combinations</h2>
@@ -338,7 +442,9 @@ const About = () => {
               >
                 <div className="flex items-start space-x-4">
                   <div className="bg-gradient-to-br from-blue-500 to-indigo-500 p-3 rounded-xl text-white group-hover:scale-110 transition-transform flex-shrink-0">
-                    {tech.icon}
+                    <div className="animate-sparkle">
+                      {tech.icon}
+                    </div>
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-gray-900 mb-2">
@@ -413,8 +519,10 @@ const About = () => {
                 className="bg-gradient-to-br from-white to-blue-50 border-2 border-blue-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300"
               >
                 <div className="flex items-start space-x-4">
-                  <div className="bg-gradient-to-br from-blue-500 to-indigo-500 p-3 rounded-xl text-white flex-shrink-0">
-                    {use.icon}
+                  <div className="bg-gradient-to-br from-blue-500 to-indigo-500 p-3 rounded-xl text-white flex-shrink-0 animate-pulse-glow">
+                    <div className="animate-float">
+                      {use.icon}
+                    </div>
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-gray-900 mb-2">
@@ -436,7 +544,7 @@ const About = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center space-x-2 bg-blue-100 border border-blue-300 rounded-full px-4 py-2 text-blue-700 text-sm font-semibold mb-4">
-              <Layers className="h-4 w-4" />
+              <Layers className="h-4 w-4 animate-sparkle" />
               <span>Technical Highlights</span>
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Enterprise-Grade Features</h2>
@@ -467,8 +575,8 @@ const About = () => {
         <div className="max-w-5xl mx-auto">
           <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-3xl p-8 md:p-12 border-2 border-orange-200">
             <div className="flex items-start space-x-4 mb-6">
-              <div className="bg-gradient-to-br from-orange-500 to-red-500 p-3 rounded-xl">
-                <Rocket className="h-6 w-6 text-white" />
+              <div className="bg-gradient-to-br from-orange-500 to-red-500 p-3 rounded-xl animate-pulse-glow">
+                <Rocket className="h-6 w-6 text-white animate-float" />
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mt-1">MindsDB Hacktoberfest 2025</h2>
             </div>
@@ -510,10 +618,10 @@ const About = () => {
           </p>
           <a
             href="/home"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-10 py-5 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-10 py-5 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse-glow"
           >
             <span>Start Analyzing Now</span>
-            <Sparkles className="h-5 w-5" />
+            <Sparkles className="h-5 w-5 animate-sparkle" />
           </a>
         </div>
       </section>
