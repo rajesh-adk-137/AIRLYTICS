@@ -487,7 +487,7 @@ const Home = () => {
                       onChange={(e) => handleFilterChange('limit', parseInt(e.target.value))}
                       className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm bg-white"
                     >
-                      {[20, 50, 100, 200, 500, 1000].map(l => (
+                      {[10,20, 50, 75, 100].map(l => (
                         <option key={l} value={l}>{l}</option>
                       ))}
                     </select>
@@ -600,7 +600,7 @@ const Home = () => {
             <div className="space-y-6">
               {apiMode === 'agent' && results.mode === 'base_case' && results.note && (
                 <div className="max-w-4xl mx-auto">
-                  <div className="bg-amber-50/90 backdrop-blur-md border-2 border-amber-300 rounded-2xl p-6 shadow-xl">
+                  <div className="bg-amber-50 backdrop-blur-md border-2 border-amber-200 rounded-2xl p-6 shadow-xl">
                     <div className="flex items-start space-x-3">
                       <Sparkles className="h-6 w-6 text-amber-600 mt-0.5 flex-shrink-0" />
                       <div className="flex-1">
