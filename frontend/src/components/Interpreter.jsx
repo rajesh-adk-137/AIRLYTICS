@@ -1,3 +1,4 @@
+// src/components/Interpreter.jsx
 import { useState } from 'react';
 import { Brain, Lightbulb, Loader2, Sparkles, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -19,37 +20,48 @@ const Interpreter = ({ results, query }) => {
       const mode = results.mode || 'base_case';
       const topRows = (results.display_rows || []).slice(0, 5);
 
-      let reintr_query = "";
-      if (mode === "special_case") reintr_query = results.semantic_query_used || "";
-      else reintr_query = results.interpreted_query || "";
+      let reintr_query = '';
+      if (mode === 'special_case') reintr_query = results.semantic_query_used || '';
+      else reintr_query = results.interpreted_query || '';
 
       let baseStats = null;
-      if (mode === "special_case") baseStats = results.base_stats || {};
+      if (mode === 'special_case') baseStats = results.base_stats || {};
       else baseStats = results.summary_stats || {};
 
-      const specialStats = mode === "special_case" ? (results.multivalue_stats || null) : null;
+      // ✅ Add user_message as description inside special_stats when available
+      let specialStats = null;
+      if (mode === 'special_case') {
+        specialStats = results.multivalue_stats || null;
+        if (specialStats && results.user_message) {
+          specialStats = {
+            ...specialStats,
+            description: results.user_message
+          };
+        }
+      }
 
       const payload = {
-        query: query || "",
-        reintr_query: reintr_query || "",
+        query: query || '',
+        reintr_query: reintr_query || '',
         top_reviews: topRows.map(r => ({
-          airline_name: r.airline_name || "Unknown",
+          airline_name: r.airline_name || 'Unknown',
           overall_rating: r.overall_rating,
           recommended: r.recommended,
           verified: r.verified,
           seat_type: r.seat_type,
           type_of_traveller: r.type_of_traveller,
-          review: r.review || ""
+          review: r.review || ''
         })),
         base_stats: baseStats || {},
         special_stats: specialStats
       };
 
-      console.log("📤 Sending to interpret agent:", {
+      console.log('📤 Sending to interpret agent:', {
         mode,
         has_reintr_query: !!payload.reintr_query,
         has_base_stats: Object.keys(payload.base_stats).length > 0,
         has_special_stats: !!payload.special_stats,
+        has_description: specialStats?.description ? true : false,
         top_reviews_count: payload.top_reviews.length
       });
 
@@ -66,9 +78,9 @@ const Interpreter = ({ results, query }) => {
 
       const data = await resp.json();
       setAgentText(data.answer || 'No interpretation returned.');
-      
+
     } catch (err) {
-      console.error("❌ Interpret failed:", err);
+      console.error('❌ Interpret failed:', err);
       setInterpretError(err.message || 'Failed to interpret results.');
     } finally {
       setIsInterpreting(false);
