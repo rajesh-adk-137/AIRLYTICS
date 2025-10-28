@@ -130,7 +130,7 @@ async def base_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         # --- Step 1: Build Base SQL Query ---
         sql_query = f"""
             SELECT *
-            FROM airline_kb_500
+            FROM airline_kb_10000
             WHERE content = '{escaped_query}'
         """
 
@@ -279,7 +279,7 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         # Step 2: Build SQL Query with Metadata Filters (using agent's new_query)
         sql_query = f"""
             SELECT *
-            FROM airline_kb_500
+            FROM airline_kb_10000
             WHERE content = '{escape_sql_string(new_query)}'
         """
 
