@@ -36,7 +36,7 @@ AIRLYTICS blends **semantic retrieval**, **structured SQL logic**, and **AI-driv
 
 * **Dual-Mode Intelligence**
 
-  * 🧠 **Semantic Mode:** Find reviews by natural language (e.g. “poor food and late flights”).
+  * 🧠 **Semantic Mode:** Find reviews by natural language (e.g. “poor food and late flights”) along with metadata filtering.
   * 📊 **Advanced Analytics Mode:** Ask analytical questions — the agent automatically maps them to the right function.
 
 * **AI InsightInterpreter**
