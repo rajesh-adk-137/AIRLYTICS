@@ -120,8 +120,11 @@ const Home = () => {
         const smartData = await smartResponse.json();
 
         if (smartData.mode === 'special_case') {
-          // Also send filters to base_case when fetching parallel data
-          const baseRequestBody = buildRequestBody(query.trim());
+          // 🔥 FIX: Use the REINTERPRETED query from agent, not original query
+          const reinterpretedQuery = smartData.semantic_query_used || query.trim();
+          
+          // Build base_case request with the SAME reinterpreted query
+          const baseRequestBody = buildRequestBody(reinterpretedQuery);
           
           const baseResponse = await fetch('http://127.0.0.1:8000/base_case', {
             method: 'POST',

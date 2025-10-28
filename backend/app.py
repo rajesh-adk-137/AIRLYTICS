@@ -238,6 +238,8 @@ async def base_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         raise HTTPException(status_code=500, detail=f"Base case analysis failed: {str(e)}")
 
 
+
+
 # ---------------------------------------------------------
 # 🧠 Smart Case Endpoint — Agent-driven Query Interpretation + Base Stats + Metadata Filters
 # ---------------------------------------------------------
@@ -269,41 +271,19 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
             raise HTTPException(status_code=500, detail=f"Agent response parse error: {str(e)}")
 
         mode = agent_json.get("mode", "base_case")
-
-        # Step 2: Handle Base Case Fallback
-        if mode == "base_case":
-            new_query = agent_json.get("new_query", request.query)
-            msg = agent_json.get("message", "Interpreted as base case.")
-            logger.info(f"⚙️ Agent fallback to base case: {msg}")
-
-            base_req = AirlineSearchRequest(query=new_query, limit=request.limit)
-            base_data = await base_case_analysis(base_req, limit=limit)
-
-            # Convert JSONResponse to dict if returned as such
-            if hasattr(base_data, "body"):
-                base_data = json.loads(base_data.body.decode("utf-8"))
-
-            base_data["note"] = msg
-            base_data["interpreted_query"] = new_query
-            return base_data
-
-        # Step 3: Extract Smart Case Instructions
         new_query = agent_json.get("new_query", request.query)
+        user_msg = agent_json.get("message", "")
         func_name = agent_json.get("function_to_call")
         params = agent_json.get("parameters", {})
-        user_msg = agent_json.get("user_message", "")
 
-        if not func_name:
-            raise HTTPException(status_code=400, detail="Agent did not specify a function to call.")
-
-        # Step 4: Build SQL Query with Metadata Filters
+        # Step 2: Build SQL Query with Metadata Filters (using agent's new_query)
         sql_query = f"""
             SELECT *
             FROM airline_kb_500
             WHERE content = '{escape_sql_string(new_query)}'
         """
 
-        # --- Apply Metadata Filters (same as base_case) ---
+        # --- Apply Metadata Filters ---
         if request.airline_name:
             sql_query += f" AND airline_name = '{escape_sql_string(request.airline_name)}'"
         if request.type_of_traveller:
@@ -335,14 +315,15 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         limit_value = getattr(request, "limit", limit) or limit
         sql_query += f" LIMIT {limit_value};"
 
-        logger.info(f"📊 Running KB Query for smart analysis with filters: {sql_query}")
+        logger.info(f"📊 Running KB Query with agent's reinterpreted query: {sql_query}")
         
-        # Step 5: Execute Query
+        # Step 3: Execute Query (single query for both base_case and special_case modes)
         result = project.query(sql_query)
         rows = result.fetch()
         if rows.empty:
-            raise HTTPException(status_code=404, detail="No matching reviews found for semantic filter.")
+            raise HTTPException(status_code=404, detail="No matching reviews found.")
 
+        # Step 4: Parse Metadata
         metadata_list = []
         for _, row in rows.iterrows():
             try:
@@ -354,7 +335,58 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         if not metadata_list:
             raise HTTPException(status_code=500, detail="Metadata could not be parsed from MindsDB rows.")
 
-        # Step 6: Execute Analytical Function
+        # Step 5: Prepare display rows (top 50)
+        display_rows = []
+        for _, row in rows.head(50).iterrows():
+            try:
+                meta = json.loads(row.get("metadata", "{}"))
+            except json.JSONDecodeError:
+                meta = {}
+
+            display_rows.append({
+                "id": row.get("id"),
+                "airline_name": meta.get("airline_name", "Unknown"),
+                "review": row.get("chunk_content", ""),
+                "overall_rating": meta.get("overall_rating"),
+                "seat_comfort": meta.get("seat_comfort"),
+                "cabin_staff_service": meta.get("cabin_staff_service"),
+                "food_beverages": meta.get("food_beverages"),
+                "ground_service": meta.get("ground_service"),
+                "inflight_entertainment": meta.get("inflight_entertainment"),
+                "wifi_connectivity": meta.get("wifi_connectivity"),
+                "value_for_money": meta.get("value_for_money"),
+                "recommended": meta.get("recommended"),
+                "verified": meta.get("verified"),
+                "type_of_traveller": meta.get("type_of_traveller"),
+                "seat_type": meta.get("seat_type")
+            })
+
+        # Step 6: Handle Base Case Mode
+        if mode == "base_case":
+            logger.info(f"⚙️ Agent interpreted as base case: {user_msg}")
+            
+            # Compute summary stats (same as base_case endpoint)
+            stats_summary = summarize_metadata(metadata_list)
+            if "error" in stats_summary:
+                raise HTTPException(status_code=500, detail=stats_summary["error"])
+
+            response_data = {
+                "mode": "base_case",
+                "query": request.query,
+                "interpreted_query": new_query,
+                "filters": request.dict(exclude_none=True),
+                "total_results_fetched": len(rows),
+                "display_rows": display_rows,
+                "summary_stats": stats_summary,
+                "note": f"{user_msg} Returning top 50 rows for UI display; stats computed on {len(rows)} samples."
+            }
+
+            return JSONResponse(content=sanitize_for_json(response_data))
+
+        # Step 7: Handle Special Case Mode - Execute Analytical Function
+        if not func_name:
+            raise HTTPException(status_code=400, detail="Agent did not specify a function to call.")
+
         func_map = {
             "conditional_rating_analysis": conditional_rating_analysis,
             "conditional_rating_to_rating_analysis": conditional_rating_to_rating_analysis,
@@ -382,36 +414,14 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         if "error" in analysis_result:
             raise HTTPException(status_code=400, detail=analysis_result["error"])
 
-        # Step 7: Compute Base Stats
+        # Step 8: Compute Base Stats
         try:
             base_stats_result = summarize_metadata(metadata_list)
         except Exception as e:
             logger.warning(f"Base stats computation failed: {e}")
             base_stats_result = {"error": f"Base stats unavailable: {str(e)}"}
 
-        # Step 8: Prepare top 50 display rows
-        display_rows = []
-        for _, row in rows.head(50).iterrows():
-            try:
-                meta = json.loads(row.get("metadata", "{}"))
-            except json.JSONDecodeError:
-                meta = {}
-
-            display_rows.append({
-                "id": row.get("id"),
-                "airline_name": meta.get("airline_name", "Unknown"),
-                "review": row.get("chunk_content", ""),
-                "overall_rating": meta.get("overall_rating"),
-                "type_of_traveller": meta.get("type_of_traveller"),
-                "seat_type": meta.get("seat_type"),
-                "recommended": meta.get("recommended"),
-                "verified": meta.get("verified"),
-                "wifi_connectivity": meta.get("wifi_connectivity"),
-                "ground_service": meta.get("ground_service"),
-                "value_for_money": meta.get("value_for_money")
-            })
-
-        # Step 9: Return Smart Response with Filters Info
+        # Step 9: Return Smart Response
         response_payload = {
             "mode": "special_case",
             "original_query": request.query,
@@ -434,6 +444,8 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
     except Exception as e:
         logger.error(f"Smart Case Analysis failed: {e}")
         raise HTTPException(status_code=500, detail=f"Smart Case Analysis failed: {str(e)}")
+
+
 
 # ---------------------------------------------------------
 # 🧠🗣️ Interpret Agent Endpoint — explains results from either API
