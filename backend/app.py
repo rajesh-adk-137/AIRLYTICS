@@ -239,13 +239,14 @@ async def base_case_analysis(request: AirlineSearchRequest, limit: int = 500):
 
 
 # ---------------------------------------------------------
-# 🧠 Smart Case Endpoint — Agent-driven Query Interpretation + Base Stats
+# 🧠 Smart Case Endpoint — Agent-driven Query Interpretation + Base Stats + Metadata Filters
 # ---------------------------------------------------------
 @app.post("/smart_case")
 async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
     """
-    🧩 Smart Case API (Enhanced)
+    🧩 Smart Case API (Enhanced with Metadata Filters)
     Uses analytics_query_agent to interpret complex natural-language queries.
+    Applies all metadata filters like base_case.
     """
     try:
         # Step 1: Ask Agent to interpret query
@@ -295,14 +296,48 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         if not func_name:
             raise HTTPException(status_code=400, detail="Agent did not specify a function to call.")
 
-        # Step 4: Fetch Data from MindsDB
+        # Step 4: Build SQL Query with Metadata Filters
         sql_query = f"""
             SELECT *
             FROM airline_kb_500
             WHERE content = '{escape_sql_string(new_query)}'
-            LIMIT {request.limit or limit};
         """
-        logger.info(f"📊 Running KB Query for smart analysis: {sql_query}")
+
+        # --- Apply Metadata Filters (same as base_case) ---
+        if request.airline_name:
+            sql_query += f" AND airline_name = '{escape_sql_string(request.airline_name)}'"
+        if request.type_of_traveller:
+            sql_query += f" AND type_of_traveller = '{escape_sql_string(request.type_of_traveller)}'"
+        if request.seat_type:
+            sql_query += f" AND seat_type = '{escape_sql_string(request.seat_type)}'"
+        if request.recommended:
+            sql_query += f" AND recommended = '{escape_sql_string(request.recommended)}'"
+        if request.verified is not None:
+            sql_query += f" AND verified = {str(request.verified).lower()}"
+
+        numeric_fields = [
+            "overall_rating",
+            "seat_comfort",
+            "cabin_staff_service",
+            "food_beverages",
+            "ground_service",
+            "inflight_entertainment",
+            "wifi_connectivity",
+            "value_for_money",
+        ]
+
+        for field in numeric_fields:
+            value = getattr(request, field, None)
+            if value is not None:
+                sql_query += f" AND {field} >= {value}"
+
+        # Apply Limit
+        limit_value = getattr(request, "limit", limit) or limit
+        sql_query += f" LIMIT {limit_value};"
+
+        logger.info(f"📊 Running KB Query for smart analysis with filters: {sql_query}")
+        
+        # Step 5: Execute Query
         result = project.query(sql_query)
         rows = result.fetch()
         if rows.empty:
@@ -319,7 +354,7 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         if not metadata_list:
             raise HTTPException(status_code=500, detail="Metadata could not be parsed from MindsDB rows.")
 
-        # Step 5: Execute Analytical Function
+        # Step 6: Execute Analytical Function
         func_map = {
             "conditional_rating_analysis": conditional_rating_analysis,
             "conditional_rating_to_rating_analysis": conditional_rating_to_rating_analysis,
@@ -347,14 +382,14 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
         if "error" in analysis_result:
             raise HTTPException(status_code=400, detail=analysis_result["error"])
 
-        # Step 6: Compute Base Stats
+        # Step 7: Compute Base Stats
         try:
             base_stats_result = summarize_metadata(metadata_list)
         except Exception as e:
             logger.warning(f"Base stats computation failed: {e}")
             base_stats_result = {"error": f"Base stats unavailable: {str(e)}"}
 
-        # Step 7: Prepare top 50 display rows
+        # Step 8: Prepare top 50 display rows
         display_rows = []
         for _, row in rows.head(50).iterrows():
             try:
@@ -376,11 +411,12 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
                 "value_for_money": meta.get("value_for_money")
             })
 
-        # Step 8: Return Smart Response
+        # Step 9: Return Smart Response with Filters Info
         response_payload = {
             "mode": "special_case",
             "original_query": request.query,
             "semantic_query_used": new_query,
+            "filters_applied": request.dict(exclude_none=True),
             "user_message": user_msg,
             "function_executed": func_name,
             "parameters_passed": params,
@@ -388,7 +424,7 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
             "display_rows": display_rows,
             "multivalue_stats": analysis_result,
             "base_stats": base_stats_result,
-            "note": "Top 50 shown; both analytical and general stats computed."
+            "note": f"Top 50 shown; both analytical and general stats computed on {len(rows)} filtered samples."
         }
 
         return JSONResponse(content=sanitize_for_json(response_payload))
@@ -398,7 +434,6 @@ async def smart_case_analysis(request: AirlineSearchRequest, limit: int = 500):
     except Exception as e:
         logger.error(f"Smart Case Analysis failed: {e}")
         raise HTTPException(status_code=500, detail=f"Smart Case Analysis failed: {str(e)}")
-
 
 # ---------------------------------------------------------
 # 🧠🗣️ Interpret Agent Endpoint — explains results from either API

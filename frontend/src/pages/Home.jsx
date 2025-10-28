@@ -60,6 +60,42 @@ const Home = () => {
     setError(null);
   }, [apiMode]);
 
+  const buildRequestBody = (queryText) => {
+    const requestBody = {
+      query: queryText,
+      limit: filters.limit
+    };
+
+    // Add metadata filters
+    if (filters.airline_name) requestBody.airline_name = filters.airline_name;
+    if (filters.type_of_traveller) requestBody.type_of_traveller = filters.type_of_traveller;
+    if (filters.seat_type) requestBody.seat_type = filters.seat_type;
+    if (filters.recommended) requestBody.recommended = filters.recommended;
+    if (filters.verified !== null) requestBody.verified = filters.verified;
+
+    // Add numeric filters
+    [
+      "overall_rating",
+      "seat_comfort",
+      "cabin_staff_service",
+      "food_beverages",
+      "ground_service",
+      "inflight_entertainment",
+      "wifi_connectivity",
+      "value_for_money"
+    ].forEach(key => {
+      const val = filters[key];
+      if (val !== null && val !== '') {
+        const numVal = parseInt(val);
+        if (!isNaN(numVal)) {
+          requestBody[key] = numVal;
+        }
+      }
+    });
+
+    return requestBody;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
@@ -70,10 +106,8 @@ const Home = () => {
 
     try {
       if (apiMode === 'agent') {
-        const smartRequestBody = {
-          query: query.trim(),
-          limit: filters.limit
-        };
+        // Build request body with all filters for smart_case
+        const smartRequestBody = buildRequestBody(query.trim());
 
         const smartResponse = await fetch('http://127.0.0.1:8000/smart_case', {
           method: 'POST',
@@ -86,7 +120,9 @@ const Home = () => {
         const smartData = await smartResponse.json();
 
         if (smartData.mode === 'special_case') {
-          const baseRequestBody = { query: query.trim(), limit: filters.limit };
+          // Also send filters to base_case when fetching parallel data
+          const baseRequestBody = buildRequestBody(query.trim());
+          
           const baseResponse = await fetch('http://127.0.0.1:8000/base_case', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -106,35 +142,8 @@ const Home = () => {
           setResults(smartData);
         }
       } else {
-        const requestBody = {
-          query: query.trim(),
-          limit: filters.limit
-        };
-
-        if (filters.airline_name) requestBody.airline_name = filters.airline_name;
-        if (filters.type_of_traveller) requestBody.type_of_traveller = filters.type_of_traveller;
-        if (filters.seat_type) requestBody.seat_type = filters.seat_type;
-        if (filters.recommended) requestBody.recommended = filters.recommended;
-        if (filters.verified !== null) requestBody.verified = filters.verified;
-
-        [
-          "overall_rating",
-          "seat_comfort",
-          "cabin_staff_service",
-          "food_beverages",
-          "ground_service",
-          "inflight_entertainment",
-          "wifi_connectivity",
-          "value_for_money"
-        ].forEach(key => {
-          const val = filters[key];
-          if (val !== null && val !== '') {
-            const numVal = parseInt(val);
-            if (!isNaN(numVal)) {
-              requestBody[key] = numVal;
-            }
-          }
-        });
+        // Semantic mode - build request with filters
+        const requestBody = buildRequestBody(query.trim());
 
         const response = await fetch('http://127.0.0.1:8000/base_case', {
           method: 'POST',
