@@ -97,6 +97,20 @@ AIRLYTICS blends **semantic retrieval**, **structured SQL logic**, and **AI-driv
 
 ---
 
+
+-----
+
+## Getting Started
+
+### Ensure you system has:
+
+  - **Docker Desktop** & **Docker Compose**
+  - **Python 3.8+**
+  - **Node.js** & **Yarn**
+
+-----
+
+
 ## 🛠️ Installation Guide
 
 ### 1. Clone the Repository
