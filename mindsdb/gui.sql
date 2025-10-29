@@ -47,13 +47,31 @@ SELECT unique_id, review, airline_name, overall_rating, verified, aircraft,
        wifi_connectivity, value_for_money, recommended
 FROM airline_sheet_10000.airline_review_10000;
 
---------------------------------------------------------------------
 
--- Run a test semantic search to verify the Knowledge Base is working
+
+--------------------------------------------------------------
+-- Test the Knowledge Base with a simple semantic search
+--------------------------------------------------------------
 SELECT *
 FROM airline_kb_10000
 WHERE content = 'bad food and poor service'
 LIMIT 5;
+
+
+--------------------------------------------------------------
+-- 🧩 Optional: Enable Hybrid Search (semantic + keyword)
+-- This improves recall for natural queries with mixed phrasing.
+-- hybrid_search = true → activates hybrid retrieval
+-- hybrid_search_alpha = 0.5 → balances keyword & semantic relevance
+--------------------------------------------------------------
+SELECT *
+FROM airline_kb_10000
+WHERE content = 'bad legroom Emirates flight'
+AND hybrid_search = true
+AND hybrid_search_alpha = 0.7
+LIMIT 5;
+
+
 
 --------------------------------------------------------------------
 

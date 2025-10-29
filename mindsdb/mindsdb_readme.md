@@ -31,48 +31,39 @@ This dataset contains thousands of passenger reviews with ratings and categorica
 
 ### 📂 Available CSV files
 
-In this repository, you’ll find the following datasets:
-
 * `airline_review_500.csv`
 * `airline_review_1000.csv`
 * `airline_review_10000.csv`
 * `airline_review_15000.csv`
 * `airline_review_20000.csv`
 
-**Note:**
-Due to OpenAI’s embedding token rate limits, only the **10,000-record dataset** (`airline_review_10000.csv`) is used to create the Knowledge Base in this project.
-If your API tier allows higher throughput, feel free to scale up to 20,000 records.
+> **Note:**
+> Only the **10,000-record dataset** (`airline_review_10000.csv`) is used to create the Knowledge Base by default for performance and API rate reasons.
+> You may increase this to 20,000 if your embedding quota allows.
 
 ---
 
 ### 🧭 Steps to prepare your data
 
-1. **Upload the dataset to Google Drive.**
-2. **Open it with Google Sheets** (convert the CSV into a Sheet).
-3. **Set permissions:**
+1. **Upload your CSV** to Google Drive.
+2. **Open with Google Sheets** (auto-converts CSV into a Sheet).
+3. **Set sharing permissions:**
 
    * Click “Share” → “Anyone with the link” → “Viewer”.
-4. **Get the Sheet ID:**
-   It’s the long string in your sheet URL between `/d/` and `/edit`, for example:
+4. **Copy your Sheet ID:**
+   The Sheet ID is the part between `/d/` and `/edit` in your URL.
+   Example:
 
    ```
    https://docs.google.com/spreadsheets/d/1C14zax-556ev3e5Cx5tCFho5VUjHe4JdvaW8Z2aDBzo/edit
    ```
 
-   → The Sheet ID is: `1C14zax-556ev3e5Cx5tCFho5VUjHe4JdvaW8Z2aDBzo`
-5. **Ensure the sheet name** matches the dataset (e.g., `airline_review_10000`).
+   → Sheet ID = `1C14zax-556ev3e5Cx5tCFho5VUjHe4JdvaW8Z2aDBzo`
+5. **Ensure the Sheet name** matches the dataset name (`airline_review_10000`).
 
 ---
 
 ## 3. Configure MindsDB Resources
-
-Now open the **SQL Editor** in MindsDB Studio and run the commands below one by one.
-Replace:
-
-* `YOUR_GOOGLE_SHEET_ID` with your actual sheet ID
-* `YOUR_OPENAI_API_KEY` with your valid API key
-
----
 
 ### 🔹 Step 1 — Connect to your Google Sheet
 
@@ -99,10 +90,10 @@ SELECT * FROM airline_sheet_10000.airline_review_10000 LIMIT 50;
 CREATE KNOWLEDGE_BASE IF NOT EXISTS airline_kb_10000
 USING
 embedding_model = {
-    "provider": "openai",
-    "model_name": "text-embedding-3-large",
-    "api_key": "YOUR_OPENAI_API_KEY"
-  },
+  "provider": "openai",
+  "model_name": "text-embedding-3-large",
+  "api_key": "YOUR_OPENAI_API_KEY"
+},
 -- Optional reranking model
 -- reranking_model = {
 --   "provider": "openai",
@@ -132,7 +123,7 @@ SELECT unique_id, review, airline_name, overall_rating, verified, aircraft,
 FROM airline_sheet_10000.airline_review_10000;
 ```
 
-**Test it:**
+Test the setup:
 
 ```sql
 SELECT *
@@ -143,7 +134,41 @@ LIMIT 5;
 
 ---
 
-## 4. Create MindsDB Agents
+## 4. 🔍 Enabling Hybrid Search (Recommended)
+
+**Hybrid Search** combines **semantic vector search** and **keyword-based full-text search** to achieve more balanced and accurate retrieval.
+
+To enable it for any Knowledge Base query:
+
+```sql
+SELECT *
+FROM airline_kb_10000
+WHERE content = 'bad food quality and delayed flights'
+AND hybrid_search = true
+AND hybrid_search_alpha = 0.5;
+```
+
+### 💡 How It Works
+
+When you enable hybrid search:
+
+* **Semantic Search** retrieves contextually similar documents using embeddings.
+* **Keyword Search** finds literal keyword matches using full-text indexing.
+* Both results are **merged and ranked** based on a weighted score.
+
+`hybrid_search_alpha` controls this weight:
+
+* `0.0` → prioritize keyword matches
+* `1.0` → prioritize semantic meaning
+* Default = `0.5` (balanced)
+
+
+Hybrid Search ensures your airline queries (like “bad legroom Emirates flight”) return relevant results even when keywords are incomplete or phrased differently.
+
+
+---
+
+## 5. Create MindsDB Agents
 
 ### ✈️ A. Analytics Query Agent
 
@@ -462,9 +487,8 @@ WHERE question = 'Wi-Fi below 3 stars and long delays';
 
 ---
 
-## 5. Job Scheduling (Automated KB Updates)
 
-To automatically check for new reviews or updates every minute, create a job like this:
+## 6. Automate Updates with a Job
 
 ```sql
 CREATE JOB airline_kb_job AS (
@@ -479,25 +503,21 @@ CREATE JOB airline_kb_job AS (
 EVERY 1 minute;
 ```
 
-**Monitor or drop job if needed:**
+Monitor:
 
 ```sql
-SELECT * FROM log.jobs_history WHERE name = 'airline_kb_job';
 SHOW JOBS;
-DROP JOB airline_kb_job;
+SELECT * FROM log.jobs_history WHERE name = 'airline_kb_job';
 ```
 
 ---
 
-## 6. Run a Quick Test
-
-Once everything is ready, try the following to confirm full setup:
+## 7. Validate the Setup
 
 ```sql
 SELECT answer
 FROM analytics_query_agent
-WHERE
-  question = 'Among users complaining about check-in delays, show seat type distribution among those who rated ground service above 3.';
+WHERE question = 'Among users complaining about check-in delays, show seat type distribution among those who rated ground service above 3.';
 ```
 
 and
@@ -505,8 +525,7 @@ and
 ```sql
 SELECT answer
 FROM insight_interpreter_agent
-WHERE
-  question = 'Wi-Fi below 3 stars and poor ground service';
+WHERE question = 'Wi-Fi below 3 stars and poor ground service';
 ```
 
 ---
@@ -515,25 +534,11 @@ WHERE
 
 You’ve now successfully:
 
-1. Connected MindsDB to a live Google Sheet.
-2. Created a **Knowledge Base** of 10,000 airline reviews.
-3. Configured two **AI Agents** — one for analytics and one for interpretation.
-4. Scheduled an **auto-update job** for your KB.
-5. Verified semantic and analytical queries both work end-to-end.
+1. Connected MindsDB to Google Sheets
+2. Created and populated a Knowledge Base
+3. Enabled **Hybrid Search** for improved accuracy
+4. Set up analytics and insight agents
+5. Scheduled automatic Knowledge Base updates
 
 ---
 
-### ⚠️ Token Limit Note
-
-> OpenAI’s embedding models have token-per-minute restrictions.
-> The default setup uses **10,000 reviews** for stability across all API tiers.
-> If your account allows higher embedding throughput, you may scale up to **15,000 or 20,000** by changing dataset references.
-
----
-
-## Next Steps
-
-🎉 Congratulations! Your MindsDB environment is now fully ready.
-Head back to the main `README.md` to start your frontend and explore **AIRLYTICS** in action — ask questions, analyze flights, and interpret insights.
-
----
