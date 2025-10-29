@@ -82,7 +82,7 @@ Ask complex analytical questions — the AI agent automatically interprets your 
 **Perfect for:**
 - *"For passengers complaining about check-in delays, show seat type distribution among those who rated ground service above 3."*
 - *"Among reviews mentioning crowded flights, how many Economy Class passengers were Solo Leisure travelers compared to Business travelers?"*
-- *"Users who complained about baggage claim delays — what percentage of those who rated ground service above 4 rated overall experience below 5?"*
+- *"Users who complained about baggage claim delays — what percentage of those who rated ground service below 4 rated overall experience below 5?"*
 
 **You Get Everything from Standard Mode PLUS:**
 - Multi-dimensional statistical breakdowns
@@ -393,48 +393,65 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 ## 📺 Demo & Screenshots
 
 ### 🎥 Demo Video
-*[YouTube link to be added soon]*
+
+🎬 *[YouTube demo link to be added soon]*
 
 ---
 
 ### 🖼️ Screenshots
 
-#### Landing Page
-![Landing Page](#)
+#### 🏠 Landing Page
 
-#### Home Dashboard
-![Home Dashboard](#)
+<img width="1918" height="1017" alt="Landing Page" src="https://github.com/user-attachments/assets/88011a2a-6206-4812-9766-9c168ef335a7" />
 
-#### About Page
-![About Page](#)
+#### 🧭 Home Dashboard
 
----
+<img width="1918" height="1020" alt="Home Dashboard" src="https://github.com/user-attachments/assets/dc572930-875e-4938-a6a7-432a575f995c" />
 
-#### Semantic Search Interface
-![Semantic Search](#)
+#### ℹ️ About Page
 
-#### Base Statistics Summary
-![Base Stats](#)
+<img width="1918" height="1017" alt="About Page" src="https://github.com/user-attachments/assets/9e21dc8d-fe3c-426f-9bda-a7422a1370b7" />
 
 ---
 
-#### Advanced Analytics Functions
+#### 🔍 Semantic Search Interface
 
-| Conditional Rating | Rating-to-Rating | Category-to-Category |
-|-------------------|------------------|---------------------|
-| ![Function1](#) | ![Function2](#) | ![Function3](#) |
+<img width="1918" height="1020" alt="Semantic Search" src="https://github.com/user-attachments/assets/a78eccaf-aafc-4ef4-9967-04b2c58618a7" />
 
-| Distribution Analysis | Percentage Distribution | Base Case Handling |
-|----------------------|------------------------|-------------------|
-| ![Function4](#) | ![Function5](#) | ![BaseCase](#) |
+#### 📊 Base Statistics Summary
+
+<img width="1918" height="1018" alt="Base Statistics" src="https://github.com/user-attachments/assets/34ee18b2-4d9f-4a99-bcca-cfbf61e86be4" />
 
 ---
 
-#### AI InsightInterpreter
-![Insight Interpreter](#)
+### 🧩 Advanced Analytics Functions
 
+#### ① Conditional Rating | ② Rating-to-Rating | ③ Category-to-Category
+
+| Conditional Rating                                                                                                                               | Rating-to-Rating                                                                                                                               | Category-to-Category                                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img width="1918" height="910" alt="Conditional Rating" src="https://github.com/user-attachments/assets/13616085-abc5-4095-bfd8-86eeb132df82" /> | <img width="1918" height="910" alt="Rating-to-Rating" src="https://github.com/user-attachments/assets/1b10b993-d44b-4f20-a10c-1c2c2d8a67b1" /> | <img width="1918" height="916" alt="Category-to-Category" src="https://github.com/user-attachments/assets/2fca5efb-c49d-4e77-8653-08f59849bac8" /> |
+
+#### ④ Distribution Analysis | ⑤ Percentage Distribution | ⑥ Base Case Handling
+
+| Distribution Analysis                                                                                                                               | Percentage Distribution                                                                                                                               | Base Case Handling                                                                                                                               |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <img width="1918" height="912" alt="Distribution Analysis" src="https://github.com/user-attachments/assets/7240bbb1-5a7b-4821-9a35-673bb034d1d8" /> | <img width="1918" height="912" alt="Percentage Distribution" src="https://github.com/user-attachments/assets/f808f0d4-cb18-4bb8-9f2d-3ef0491a9665" /> | <img width="1918" height="907" alt="Base Case Handling" src="https://github.com/user-attachments/assets/4d710a03-2b90-46a4-9a6e-e8e102598a53" /> |
 
 ---
+
+#### 💬 AI InsightInterpreter
+
+<img width="1918" height="1018" alt="Insight Interpreter" src="https://github.com/user-attachments/assets/97d0fc0b-1848-413a-9fb1-a0fcabc89ddc" />
+
+---
+
+#### 🧾 Dataset Overview
+
+<img width="1666" height="420" alt="Dataset Overview" src="https://github.com/user-attachments/assets/737cecec-a833-40b7-864c-1e233c693100" />
+
+---
+
 
 ## 📊 Example Use Cases & SQL Queries
 
@@ -489,12 +506,12 @@ WHERE question = 'Among reviews mentioning crowded flights, how many Economy Cla
 ---
 
 #### 4. Conditional Rating-to-Rating Analysis
-**Natural Language:** *"Users who complained about baggage claim delays — what percentage of those who rated ground service above 4 rated overall experience below 5?"*
+**Natural Language:** *"Users who complained about baggage claim delays — what percentage of those who rated ground service below 4 rated overall experience below 5?"*
 
 ```sql
 SELECT answer
 FROM analytics_query_agent
-WHERE question = 'Users who complained about baggage claim delays — what percentage of those who rated ground service above 4 rated overall experience below 5?';
+WHERE question = 'Users who complained about baggage claim delays — what percentage of those who rated ground service below 4 rated overall experience below 5?';
 ```
 
 **Use Case:** Identify disconnects between strong individual touchpoints and weak overall satisfaction.

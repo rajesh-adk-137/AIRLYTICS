@@ -387,7 +387,7 @@ LOGIC TO FOLLOW:
 6. Try to match most queries to one of the 5 functions,if too ambiguous, use Base Case fallback.
 
 EXAMPLES:
-User: Users who complained about baggage claim delays, what percentage of those who rated ground service above 4 rated overall below 5.
+User: Users who complained about baggage claim delays, what percentage of those who rated ground service below 4 rated overall below 5.
 Expected JSON:
 Start curly brace
 mode: special_case,
