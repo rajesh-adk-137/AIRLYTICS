@@ -211,7 +211,7 @@ const Home = () => {
       "Out of all passengers mentioning uncomfortable seats, what % rated seat comfort above 3?",
       "For reviews complaining about rude staff, show cabin staff service distribution among travelers who rated overall experience below 6.",
       "Among passengers mentioning long layovers, compare the proportion of Business Class vs Economy travelers who were Solo travelers.",
-      "Users mentioning noisy cabins, what % of those who rated seat comfort above 4 rated overall experience below 6?"
+      "Users mentioning noisy cabins, what % of those who rated seat comfort below 4 rated overall experience below 6?"
     ]
   };
 
