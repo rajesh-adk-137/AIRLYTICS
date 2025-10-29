@@ -416,22 +416,37 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 
 #### 🔍 Semantic Search Interface
 
-
-<img width="1918" height="908" alt="Image-1" src="https://github.com/user-attachments/assets/9ecb9bc3-66a3-4f89-bdd0-2e83333f69d7" />
-
-<img width="1918" height="912" alt="Image-2" src="https://github.com/user-attachments/assets/36d8e08f-3800-4787-840b-8c4646648505" />
-
-<img width="1918" height="910" alt="Image-3" src="https://github.com/user-attachments/assets/6e82c03d-4249-4d1f-acaa-145479ddacee" />
-<img width="1918" height="910" alt="Image-4" src="https://github.com/user-attachments/assets/1ca6873c-f136-4e28-aa87-a92d42dd0c70" />
-<img width="1918" height="908" alt="Image-5" src="https://github.com/user-attachments/assets/60780e15-ef60-45e3-9c0c-797ab3d3ed82" />
+<img width="1918" height="1020" alt="Semantic Search" src="https://github.com/user-attachments/assets/a78eccaf-aafc-4ef4-9967-04b2c58618a7" />
 
 
+
+
+
+
+---
 
 #### 📊 Base Statistics Summary
 
-<img width="1918" height="1018" alt="Base Statistics" src="https://github.com/user-attachments/assets/34ee18b2-4d9f-4a99-bcca-cfbf61e86be4" />
+<div align="center">
+
+<table>
+  <tr>
+    <td><img width="320" alt="Image1" src="https://github.com/user-attachments/assets/9ecb9bc3-66a3-4f89-bdd0-2e83333f69d7" /></td>
+    <td><img width="320" alt="Image2" src="https://github.com/user-attachments/assets/36d8e08f-3800-4787-840b-8c4646648505" /></td>
+    <td><img width="320" alt="Image3" src="https://github.com/user-attachments/assets/6e82c03d-4249-4d1f-acaa-145479ddacee" /></td>
+  </tr>
+  <tr>
+    <td><img width="320" alt="Image4" src="https://github.com/user-attachments/assets/1ca6873c-f136-4e28-aa87-a92d42dd0c70" /></td>
+    <td><img width="320" alt="Image5" src="https://github.com/user-attachments/assets/60780e15-ef60-45e3-9c0c-797ab3d3ed82" /></td>
+    <td><img width="320" alt="Image6" src="https://github.com/user-attachments/assets/636e4a1c-bc9f-4972-b1e0-afa42cefdb17" /></td>
+  </tr>
+</table>
+
+</div>
 
 ---
+
+
 
 ### 🧩 Advanced Analytics Functions
 
