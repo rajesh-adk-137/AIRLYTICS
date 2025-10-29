@@ -410,13 +410,22 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 
 #### ℹ️ About Page
 
-<img width="1918" height="1017" alt="About Page" src="https://github.com/user-attachments/assets/9e21dc8d-fe3c-426f-9bda-a7422a1370b7" />
+<img width="1918" height="1018" alt="About Page" src="https://github.com/user-attachments/assets/ea40e52b-b250-4a23-afe6-f1f4ddf753cf" />
 
 ---
 
 #### 🔍 Semantic Search Interface
 
-<img width="1918" height="1020" alt="Semantic Search" src="https://github.com/user-attachments/assets/a78eccaf-aafc-4ef4-9967-04b2c58618a7" />
+
+<img width="1918" height="908" alt="Image-1" src="https://github.com/user-attachments/assets/9ecb9bc3-66a3-4f89-bdd0-2e83333f69d7" />
+
+<img width="1918" height="912" alt="Image-2" src="https://github.com/user-attachments/assets/36d8e08f-3800-4787-840b-8c4646648505" />
+
+<img width="1918" height="910" alt="Image-3" src="https://github.com/user-attachments/assets/6e82c03d-4249-4d1f-acaa-145479ddacee" />
+<img width="1918" height="910" alt="Image-4" src="https://github.com/user-attachments/assets/1ca6873c-f136-4e28-aa87-a92d42dd0c70" />
+<img width="1918" height="908" alt="Image-5" src="https://github.com/user-attachments/assets/60780e15-ef60-45e3-9c0c-797ab3d3ed82" />
+
+
 
 #### 📊 Base Statistics Summary
 
