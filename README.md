@@ -355,6 +355,87 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 
 ---
 
+## 🎃 MindsDB Hacktoberfest 2025 Submission
+
+**Category:** Track 2 – Advanced Capabilities
+
+### 🏆 Advanced Features Demonstrated
+
+✅ **Knowledge Base Integration:** Complete RAG pipeline with semantic search  
+✅ **Agent Integration:** AI-driven query interpretation and function routing  
+✅ **Hybrid Search:** Semantic + metadata filtering capabilities  
+✅ **Metadata Filtering:** Multi-dimensional structured field filtering  
+✅ **Jobs Integration:** Automated KB updates (future roadmap)  
+✅ **Evaluation Metrics:** Query relevance, hit rate, statistical accuracy  
+✅ **Zero-ETL Architecture:** Direct Google Sheets → MindsDB ingestion  
+
+### 🎯 Why This Submission Stands Out
+
+1. **Complete RAG-to-BI Pipeline:** Not just search — full analytical capabilities with visualizations
+2. **Dual-Agent Architecture:** Semantic + Statistical agents working in tandem
+3. **Explainable AI:** Every metric comes with business context and recommendations
+4. **Production-Ready Design:** Scalable architecture, clean UI, comprehensive docs
+5. **Extensible Template:** Same approach works for hotels, restaurants, e-commerce, healthcare
+
+### 📦 Deliverables Checklist
+
+- ✅ Public GitHub repository with complete source code
+- ✅ Comprehensive README with problem statement, architecture, examples
+- ✅ Working web application (React + FastAPI)
+- ✅ MindsDB Knowledge Base with 20,000+ ingested reviews
+- ✅ Demo video (5 minutes) — *[Link to be added]*
+- ✅ Sample SQL queries and natural language examples
+- ✅ Blog post explaining the build process — *[Link to be added]*
+- ✅ Social media posts (LinkedIn, Twitter) with @MindsDB mentions
+
+---
+
+## 📺 Demo & Screenshots
+
+### 🎥 Demo Video
+*[YouTube link to be added soon]*
+
+---
+
+### 🖼️ Screenshots
+
+#### Landing Page
+![Landing Page](#)
+
+#### Home Dashboard
+![Home Dashboard](#)
+
+#### About Page
+![About Page](#)
+
+---
+
+#### Semantic Search Interface
+![Semantic Search](#)
+
+#### Base Statistics Summary
+![Base Stats](#)
+
+---
+
+#### Advanced Analytics Functions
+
+| Conditional Rating | Rating-to-Rating | Category-to-Category |
+|-------------------|------------------|---------------------|
+| ![Function1](#) | ![Function2](#) | ![Function3](#) |
+
+| Distribution Analysis | Percentage Distribution | Base Case Handling |
+|----------------------|------------------------|-------------------|
+| ![Function4](#) | ![Function5](#) | ![BaseCase](#) |
+
+---
+
+#### AI InsightInterpreter
+![Insight Interpreter](#)
+
+
+---
+
 ## 📊 Example Use Cases & SQL Queries
 
 ### Semantic Search Queries
@@ -437,87 +518,6 @@ WHERE question = 'Among users who mentioned poor inflight meals, what percent of
 - *"Emirates Business Class reviews mentioning delays, top 50 results"*
 - *"Solo Leisure travelers on long-haul flights with Wi-Fi complaints, top 75"*
 - *"Verified users rating overall experience above 8, top 100"*
-
----
-
-## 🎃 MindsDB Hacktoberfest 2025 Submission
-
-**Category:** Track 2 – Advanced Capabilities
-
-### 🏆 Advanced Features Demonstrated
-
-✅ **Knowledge Base Integration:** Complete RAG pipeline with semantic search  
-✅ **Agent Integration:** AI-driven query interpretation and function routing  
-✅ **Hybrid Search:** Semantic + metadata filtering capabilities  
-✅ **Metadata Filtering:** Multi-dimensional structured field filtering  
-✅ **Jobs Integration:** Automated KB updates (future roadmap)  
-✅ **Evaluation Metrics:** Query relevance, hit rate, statistical accuracy  
-✅ **Zero-ETL Architecture:** Direct Google Sheets → MindsDB ingestion  
-
-### 🎯 Why This Submission Stands Out
-
-1. **Complete RAG-to-BI Pipeline:** Not just search — full analytical capabilities with visualizations
-2. **Dual-Agent Architecture:** Semantic + Statistical agents working in tandem
-3. **Explainable AI:** Every metric comes with business context and recommendations
-4. **Production-Ready Design:** Scalable architecture, clean UI, comprehensive docs
-5. **Extensible Template:** Same approach works for hotels, restaurants, e-commerce, healthcare
-
-### 📦 Deliverables Checklist
-
-- ✅ Public GitHub repository with complete source code
-- ✅ Comprehensive README with problem statement, architecture, examples
-- ✅ Working web application (React + FastAPI)
-- ✅ MindsDB Knowledge Base with 20,000+ ingested reviews
-- ✅ Demo video (5 minutes) — *[Link to be added]*
-- ✅ Sample SQL queries and natural language examples
-- ✅ Blog post explaining the build process — *[Link to be added]*
-- ✅ Social media posts (LinkedIn, Twitter) with @MindsDB mentions
-- ✅ Evaluation report: query accuracy, relevance metrics, performance benchmarks
-
----
-
-## 📺 Demo & Screenshots
-
-### 🎥 Demo Video
-*[YouTube link to be added soon]*
-
----
-
-### 🖼️ Screenshots
-
-#### Landing Page
-![Landing Page](#)
-
-#### Home Dashboard
-![Home Dashboard](#)
-
-#### About Page
-![About Page](#)
-
----
-
-#### Semantic Search Interface
-![Semantic Search](#)
-
-#### Base Statistics Summary
-![Base Stats](#)
-
----
-
-#### Advanced Analytics Functions
-
-| Conditional Rating | Rating-to-Rating | Category-to-Category |
-|-------------------|------------------|---------------------|
-| ![Function1](#) | ![Function2](#) | ![Function3](#) |
-
-| Distribution Analysis | Percentage Distribution | Base Case Handling |
-|----------------------|------------------------|-------------------|
-| ![Function4](#) | ![Function5](#) | ![BaseCase](#) |
-
----
-
-#### AI InsightInterpreter
-![Insight Interpreter](#)
 
 ---
 
