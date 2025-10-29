@@ -280,7 +280,7 @@ const About = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center space-y-6">
           <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-200 rounded-full px-4 py-2 text-indigo-700 text-sm font-medium animate-fade-in-up opacity-0">
             <Target className="h-4 w-4 animate-sparkle" />
@@ -303,7 +303,7 @@ const About = () => {
       </section>
 
       {/* Purpose Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12 border border-blue-100 animate-slide-in delay-300 opacity-0">
             <div className="flex items-start space-x-4 mb-6">
