@@ -328,10 +328,9 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 
 ✅ **Knowledge Base Integration:** Complete RAG pipeline with semantic search  
 ✅ **Agent Integration:** AI-driven query interpretation and function routing  
-✅ **Hybrid Search:** Semantic + metadata filtering capabilities  
+✅ **Hybrid Search:** Semantic, keyword and metadata filtering capabilities  
 ✅ **Metadata Filtering:** Multi-dimensional structured field filtering  
 ✅ **Jobs Integration:** Automated KB updates (future roadmap)  
-✅ **Evaluation Metrics:** Query relevance, hit rate, statistical accuracy  
 ✅ **Zero-ETL Architecture:** Direct Google Sheets → MindsDB ingestion  
 
 ### 🎯 Why This Submission Stands Out
@@ -348,12 +347,10 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 - ✅ Comprehensive README with problem statement, architecture, examples
 - ✅ Working web application (React + FastAPI)
 - ✅ MindsDB Knowledge Base with 20,000+ ingested reviews
-- ✅ Demo video (5 minutes) — *[Link to be added]*
+- ✅ Demo video on youtube
 - ✅ Sample SQL queries and natural language examples
-- ✅ Blog post explaining the build process — *[Link to be added]*
-- ✅ Social media posts (LinkedIn, Twitter) with @MindsDB mentions
+- ✅ Blog post explaining the build process 
 
-Here’s the correctly formatted section with your **YouTube demo link** embedded neatly and styled for your README:
 
 ---
 
@@ -524,14 +521,7 @@ WHERE question = 'Among users who mentioned poor inflight meals, what percent of
 
 **Use Case:** Check if high meal ratings align with recommendation intent despite negative meal mentions.
 
----
 
-### Metadata Filtering Examples
-- *"Emirates Business Class reviews mentioning delays, top 50 results"*
-- *"Solo Leisure travelers on long-haul flights with Wi-Fi complaints, top 75"*
-- *"Verified users rating overall experience above 8, top 100"*
-
----
 
 ## 🤝 Contributing
 
@@ -550,7 +540,6 @@ We welcome contributions! Here's how to get involved:
    ```bash
    git push origin feature/YourFeature
    ```
-5. **Open a Pull Request** under the Hacktoberfest 2025 event
 
 ---
 
@@ -570,16 +559,7 @@ See [LICENSE](https://github.com/rajesh-adk-137/AIRLYTICS/blob/main/LICENSE) for
 - **Icons:** [Lucide React](https://lucide.dev/)
 - **Event:** [MindsDB Hacktoberfest 2025](https://mindsdb.com/hacktoberfest-2025)
 
----
 
-## 📬 Contact & Links
-
-- **GitHub:** [rajesh-adk-137/AIRLYTICS](https://github.com/rajesh-adk-137/AIRLYTICS)
-- **YouTube Demo:** [Watch Demo](https://www.youtube.com/watch?v=KkKMPIlNErU)
-- **Blog Post:** [Talk to Your Data Like a Human: How I Built an AI Airline Analyst](https://dev.to/rajesh-adk-137/talk-to-your-data-like-a-human-how-i-built-an-ai-airline-analyst-4pl9)
-- **LinkedIn:** [Rajesh Adhikari](https://www.linkedin.com/in/rajesh-adhikari-93425a310/)
-
----
 
 <p align="center">
   <strong>Built with ❤️ for MindsDB Hacktoberfest 2025</strong>
