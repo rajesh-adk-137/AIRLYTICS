@@ -203,7 +203,7 @@ Every semantic query automatically generates **Base Stats** — a holistic view 
 ---
 
 ## 🏗️ Architecture Overview
-<img width="1024" height="1536" alt="System Architecture" src="https://github.com/user-attachments/assets/15c29516-87e3-433b-b6b0-b64c384af2b0" />
+<img width="512" height="768" alt="System Architecture" src="https://github.com/user-attachments/assets/15c29516-87e3-433b-b6b0-b64c384af2b0" />
 
 ---
 
