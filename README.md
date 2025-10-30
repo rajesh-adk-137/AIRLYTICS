@@ -183,24 +183,6 @@ After any query (semantic or analytical), click **"Get AI Insights"** to activat
 
 ---
 
-### 📈 **Comprehensive Base Statistics**
-
-Every semantic query automatically generates **Base Stats** — a holistic view of matched reviews:
-
-**Computed Metrics:**
-- Numeric summaries (mean, median, std dev, min, max) for all rating fields
-- Distribution analysis (skewness, outlier detection, histograms)
-- Correlation matrix (relationships between rating dimensions)
-- Categorical breakdowns (top airlines, seat types, traveler types, route patterns)
-- Quality indicators (positive review %, recommendation rate, verified user %, field completeness)
-
-**Visual Outputs:**
-- Interactive heatmaps (correlation matrices)
-- Distribution charts (histograms, box plots)
-- Category bar charts with percentages
-- Summary cards with key KPIs
-
----
 
 ## 🏗️ Architecture Overview
 <img width="512" height="768" alt="System Architecture" src="https://github.com/user-attachments/assets/15c29516-87e3-433b-b6b0-b64c384af2b0" />
@@ -213,11 +195,11 @@ Every semantic query automatically generates **Base Stats** — a holistic view 
 |-------|-----------|---------|
 | **Frontend** | React (Vite), TailwindCSS, Lucide Icons | User interface, query input, visualizations |
 | **Backend** | FastAPI (Python) | API endpoints, query orchestration |
-| **AI/Search** | MindsDB Knowledge Bases | Semantic search + metadata filtering |
-| **Agents** | MindsDB Agents (OpenAI/Gemini) | Query interpretation, function selection |
+| **AI/Search** | MindsDB Knowledge Bases | Semantic,keyword and metadata filtering |
+| **Agents** | MindsDB Agents (OpenAI) | Query interpretation, function selection |
 | **Database** | Google Sheets → MindsDB KB | Zero-ETL data ingestion |
 | **Containerization** | Docker Compose | MindsDB instance management |
-| **Visualization** | Recharts, Plotly.js | Interactive charts and heatmaps |
+| **Visualization** | Recharts, Plotly.js | Interactive charts and plots |
 
 ---
 
@@ -314,7 +296,7 @@ uvicorn app:app --reload
 
 Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_readme.md) to:
 - Create the Knowledge Base
-- Configure AI Tables (OpenAI/Gemini)
+- Configure AI Tables (OpenAI)
 - Set up Agents for query routing
 - Ingest sample data
 
@@ -330,7 +312,7 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 ✅ **Agent Integration:** AI-driven query interpretation and function routing  
 ✅ **Hybrid Search:** Semantic, keyword and metadata filtering capabilities  
 ✅ **Metadata Filtering:** Multi-dimensional structured field filtering  
-✅ **Jobs Integration:** Automated KB updates (future roadmap)  
+✅ **Jobs Integration:** Automated KB updates 
 ✅ **Zero-ETL Architecture:** Direct Google Sheets → MindsDB ingestion  
 
 ### 🎯 Why This Submission Stands Out
