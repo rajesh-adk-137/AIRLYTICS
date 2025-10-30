@@ -353,15 +353,21 @@ Follow the detailed setup instructions in [`mindsdb_readme.md`](mindsdb/mindsdb_
 - ✅ Blog post explaining the build process — *[Link to be added]*
 - ✅ Social media posts (LinkedIn, Twitter) with @MindsDB mentions
 
+Here’s the correctly formatted section with your **YouTube demo link** embedded neatly and styled for your README:
+
 ---
 
 ## 📺 Demo & Screenshots
 
 ### 🎥 Demo Video
 
-🎬 *[YouTube demo link to be added soon]*
+🎬 **[Watch the Demo on YouTube](https://youtu.be/KkKMPIlNErU?si=fk1KI5NXdW6ItY4l)**
+
+> A short walkthrough showcasing AIRLYTICS in action, from semantic search to AI-driven insights and hybrid analytics.
 
 ---
+
+
 
 ### 🖼️ Screenshots
 
