@@ -543,6 +543,18 @@ See [LICENSE](https://github.com/rajesh-adk-137/AIRLYTICS/blob/main/LICENSE) for
 
 
 
+
+
+
+## 📬 Contact & Links
+
+- **GitHub:** [rajesh-adk-137/AIRLYTICS](https://github.com/rajesh-adk-137/AIRLYTICS)
+- **YouTube Demo:** [Watch Demo](https://www.youtube.com/watch?v=KkKMPIlNErU)
+- **Blog Post:** [Talk to Your Data Like a Human: How I Built an AI Airline Analyst](https://dev.to/rajesh-adk-137/talk-to-your-data-like-a-human-how-i-built-an-ai-airline-analyst-4pl9)
+- **LinkedIn:** [Rajesh Adhikari](https://www.linkedin.com/in/rajesh-adhikari-93425a310/)
+
+---
+
 <p align="center">
   <strong>Built with ❤️ for MindsDB Hacktoberfest 2025</strong>
 </p>
@@ -550,3 +562,5 @@ See [LICENSE](https://github.com/rajesh-adk-137/AIRLYTICS/blob/main/LICENSE) for
 <p align="center">
   <em>Transforming unstructured feedback into strategic intelligence, one query at a time.</em>
 </p>
+
+---
